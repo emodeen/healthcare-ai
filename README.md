@@ -14,10 +14,11 @@ Quick start (using Docker)
 cp .env.example .env
 ```
 
-2. Start Postgres with Docker Compose:
+2. Start Postgres and Next.js with Docker Compose:
 
 ```bash
-docker-compose up -d
+# run DB and Next.js (dev) together
+docker-compose up --build -d
 ```
 
 3. Install dependencies:
@@ -26,7 +27,7 @@ docker-compose up -d
 npm install
 ```
 
-4. Generate Prisma client and run migrations:
+4. Generate Prisma client and run migrations (local or inside a container):
 
 ```bash
 npm run migrate
@@ -46,7 +47,8 @@ npm run dev
 
 Open http://localhost:3000
 
-Notes
 - The project uses `DATABASE_URL` from the environment. The `.env.example` points to Postgres on localhost; adjust if using a different host.
+- If starting the app inside Docker Compose, the Next.js container connects to the DB via the `db` service name. `docker-compose.yml` sets `DATABASE_URL` for the `web` service as `postgres://postgres:postgres@db:5432/appdb`.
+- To run the app locally (not in Docker), copy `.env.example` to `.env` and use `npm run dev` to run the app on `localhost:3000` (it will connect to a DB on your host at `localhost:5432` if your `.env` points there).
 - Prisma is now used as the ORM. `prisma/schema.prisma` defines the `Task` model. `npm run migrate` runs `prisma generate` and `prisma migrate dev --name init`.
 - To inspect the database, you can run `npx prisma studio` after `npm install` and migrations.
