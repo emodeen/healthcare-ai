@@ -40,22 +40,33 @@ export default function Home() {
   }
 
   return (
-    <main style={{ padding: 20, fontFamily: 'system-ui, sans-serif' }}>
+    <main>
       <h1>Tasks</h1>
-      <form onSubmit={add} style={{ marginBottom: 12 }}>
-        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New task" />
+      <form onSubmit={add}>
+        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New task" type="text" />
         <button type="submit">Add</button>
       </form>
-      <ul>
-        {tasks.map(t => (
-          <li key={t.id} style={{ marginBottom: 8 }}>
-            <label style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
-              <input type="checkbox" checked={t.completed} onChange={() => toggle(t)} /> {t.title}
-            </label>
-            <button onClick={() => remove(t.id)} style={{ marginLeft: 8 }}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {tasks.length === 0 ? (
+        <div className="empty-state">No tasks yet. Add one to get started!</div>
+      ) : (
+        <ul>
+          {tasks.map(t => (
+            <li key={t.id}>
+              <label>
+                <input 
+                  type="checkbox" 
+                  checked={t.completed} 
+                  onChange={() => toggle(t)} 
+                />
+                <span style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
+                  {t.title}
+                </span>
+              </label>
+              <button onClick={() => remove(t.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
