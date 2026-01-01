@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 type Task = {
   id: number;
@@ -40,33 +41,42 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <h1>Tasks</h1>
-      <form onSubmit={add}>
-        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New task" type="text" />
-        <button type="submit">Add</button>
-      </form>
-      {tasks.length === 0 ? (
-        <div className="empty-state">No tasks yet. Add one to get started!</div>
-      ) : (
-        <ul>
-          {tasks.map(t => (
-            <li key={t.id}>
-              <label>
-                <input 
-                  type="checkbox" 
-                  checked={t.completed} 
-                  onChange={() => toggle(t)} 
-                />
-                <span style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
-                  {t.title}
-                </span>
-              </label>
-              <button onClick={() => remove(t.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+    <>
+      <main>
+        <h1>Tasks</h1>
+        <form onSubmit={add}>
+          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New task" type="text" />
+          <button type="submit">Add</button>
+        </form>
+        {tasks.length === 0 ? (
+          <div className="empty-state">No tasks yet. Add one to get started!</div>
+        ) : (
+          <ul>
+            {tasks.map(t => (
+              <li key={t.id}>
+                <label>
+                  <input 
+                    type="checkbox" 
+                    checked={t.completed} 
+                    onChange={() => toggle(t)} 
+                  />
+                  <span style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
+                    {t.title}
+                  </span>
+                </label>
+                <button onClick={() => remove(t.id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </main>
+      <footer>
+        <p>&copy; 2025 Next.js Task App. All rights reserved.</p>
+        <nav>
+          <Link href="/terms">Terms of Use</Link>
+          <Link href="/privacy">Privacy Policy</Link>
+        </nav>
+      </footer>
+    </>
   );
 }

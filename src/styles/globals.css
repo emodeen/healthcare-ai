@@ -144,3 +144,36 @@ li button:hover {
   color: #999;
   font-size: 1.1rem;
 }
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+footer p {
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
