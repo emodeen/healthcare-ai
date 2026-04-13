@@ -137,6 +137,31 @@ li button:hover {
   background-color: #c0392b;
 }
 
+.next-task-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 18px 20px;
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.recommended {
+  flex: 1;
+  min-width: 240px;
+  color: #2d3a4b;
+  font-size: 1rem;
+}
+
+.recommended.muted {
+  color: #777;
+}
+
 /* Empty state message */
 .empty-state {
   text-align: center;
