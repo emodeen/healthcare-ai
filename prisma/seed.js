@@ -3,10 +3,10 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.task.createMany({
+  await prisma.contact.createMany({
     data: [
-      { title: 'First task' },
-      { title: 'Second task' },
+      { title: 'First contact' },
+      { title: 'Second contact' },
       { title: 'Buy milk' }
     ]
   });

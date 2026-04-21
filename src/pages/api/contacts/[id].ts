@@ -8,13 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const taskId = parseInt(id, 10);
-  if (Number.isNaN(taskId)) return res.status(400).json({ error: 'Invalid id' });
+  const contactId = parseInt(id, 10);
+  if (Number.isNaN(contactId)) return res.status(400).json({ error: 'Invalid id' });
 
   if (req.method === 'GET') {
-    const task = await prisma.task.findUnique({ where: { id: taskId } });
-    if (!task) return res.status(404).end();
-    return res.status(200).json(task);
+    const contact = await prisma.contact.findUnique({ where: { id: contactId } });
+    if (!contact) return res.status(404).end();
+    return res.status(200).json(contact);
   }
 
   if (req.method === 'PUT') {
@@ -23,12 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data: any = {};
     if (title !== undefined) data.title = title;
     if (completed !== undefined) data.completed = completed;
-    const updated = await prisma.task.update({ where: { id: taskId }, data });
+    const updated = await prisma.contact.update({ where: { id: contactId }, data });
     return res.status(200).json(updated);
   }
 
   if (req.method === 'DELETE') {
-    await prisma.task.delete({ where: { id: taskId } });
+    await prisma.contact.delete({ where: { id: contactId } });
     return res.status(204).end();
   }
 

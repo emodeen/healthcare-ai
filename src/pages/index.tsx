@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-type Task = {
+type Contact = {
   id: number;
   title: string;
   completed: boolean;
@@ -9,14 +9,14 @@ type Task = {
 };
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [title, setTitle] = useState('');
-  const [recommended, setRecommended] = useState<Task | null>(null);
+  const [recommended, setRecommended] = useState<Contact | null>(null);
 
   async function load() {
-    const res = await fetch('/api/tasks');
+    const res = await fetch('/api/contacts');
     const data = await res.json();
-    setTasks(data);
+    setContacts(data);
   }
 
   useEffect(() => { load(); }, []);
@@ -24,14 +24,14 @@ export default function Home() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim()) return;
-    const res = await fetch('/api/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title }) });
+    const res = await fetch('/api/contacts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title }) });
     const t = await res.json();
     setTitle('');
-    setTasks(prev => [t, ...prev]);
+    setContacts(prev => [t, ...prev]);
   }
 
   function pickNextTask() {
-    const pending = tasks.filter(task => !task.completed);
+    const pending = contacts.filter(contact => !contact.completed);
     if (pending.length === 0) {
       setRecommended(null);
       return;
@@ -42,42 +42,42 @@ export default function Home() {
     setRecommended(nextTask);
   }
 
-  async function toggle(task: Task) {
-    const res = await fetch(`/api/tasks/${task.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ completed: !task.completed }) });
+  async function toggle(contact: Contact) {
+    const res = await fetch(`/api/contacts/${contact.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ completed: !contact.completed }) });
     const updated = await res.json();
-    setTasks(prev => prev.map(p => p.id === updated.id ? updated : p));
+    setContacts(prev => prev.map(p => p.id === updated.id ? updated : p));
     setRecommended(prev => (prev?.id === updated.id ? null : prev));
   }
 
   async function remove(id: number) {
-    await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
-    setTasks(prev => prev.filter(t => t.id !== id));
+    await fetch(`/api/contacts/${id}`, { method: 'DELETE' });
+    setContacts(prev => prev.filter(t => t.id !== id));
     setRecommended(prev => (prev?.id === id ? null : prev));
   }
 
   return (
     <>
       <main>
-        <h1>Tasks</h1>
-        <section className="next-task-panel">
-          <button type="button" onClick={pickNextTask}>Pick next task</button>
+        <h1>Contacts</h1>
+        <section className="next-contact-panel">
+          <button type="button" onClick={pickNextTask}>Pick next contact</button>
           {recommended ? (
             <div className="recommended">
-              <strong>Next task:</strong> {recommended.title}
+              <strong>Next contact:</strong> {recommended.title}
             </div>
           ) : (
-            <div className="recommended muted">No recommended task yet.</div>
+            <div className="recommended muted">No recommended contact yet.</div>
           )}
         </section>
         <form onSubmit={add}>
-          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New task" type="text" />
+          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New contact" type="text" />
           <button type="submit">Add</button>
         </form>
-        {tasks.length === 0 ? (
-          <div className="empty-state">No tasks yet. Add one to get started!</div>
+        {contacts.length === 0 ? (
+          <div className="empty-state">No contacts yet. Add one to get started!</div>
         ) : (
           <ul>
-            {tasks.map(t => (
+            {contacts.map(t => (
               <li key={t.id}>
                 <label>
                   <input 

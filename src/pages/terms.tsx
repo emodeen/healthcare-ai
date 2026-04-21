@@ -7,7 +7,7 @@ export default function TermsOfUse() {
       <h1>Terms of Use</h1>
       <div style={{ maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
         <h2>1. Acceptance of Terms</h2>
-        <p>By accessing and using this Task Management Application ("the App"), you accept and agree to be bound by the terms and provision of this agreement.</p>
+        <p>By accessing and using this Contact Management Application ("the App"), you accept and agree to be bound by the terms and provision of this agreement.</p>
 
         <h2>2. Use License</h2>
         <p>Permission is granted to temporarily use the App for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
@@ -36,7 +36,7 @@ export default function TermsOfUse() {
         <h2>8. Governing Law</h2>
         <p>These terms and conditions are governed by and construed in accordance with the laws of [Your Jurisdiction] and you irrevocably submit to the exclusive jurisdiction of the courts in that state or location.</p>
 
-        <p><Link href="/">← Back to Tasks</Link></p>
+        <p><Link href="/">← Back to Contacts</Link></p>
       </div>
     </main>
   );

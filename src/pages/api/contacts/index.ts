@@ -3,8 +3,8 @@ import prisma from '../../../lib/db';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const tasks = await prisma.task.findMany({ orderBy: { created_at: 'desc' } });
-    res.status(200).json(tasks);
+    const contacts = await prisma.contact.findMany({ orderBy: { created_at: 'desc' } });
+    res.status(200).json(contacts);
     return;
   }
 
@@ -14,8 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(400).json({ error: 'Title required' });
       return;
     }
-    const task = await prisma.task.create({ data: { title } });
-    res.status(201).json(task);
+    const contact = await prisma.contact.create({ data: { title } });
+    res.status(201).json(contact);
     return;
   }
 
