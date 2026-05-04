@@ -9,12 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
-    const { title } = req.body;
+    const { title, company } = req.body;
     if (!title || typeof title !== 'string') {
       res.status(400).json({ error: 'Title required' });
       return;
     }
-    const contact = await prisma.contact.create({ data: { title } });
+    const contact = await prisma.contact.create({ data: { title, company: company || undefined } });
     res.status(201).json(contact);
     return;
   }

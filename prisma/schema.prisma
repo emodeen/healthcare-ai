@@ -10,6 +10,7 @@ datasource db {
 model Contact {
   id         Int      @id @default(autoincrement())
   title      String
+  company    String?
   completed  Boolean  @default(false)
   created_at DateTime @default(now())
 }

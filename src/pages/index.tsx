@@ -4,6 +4,7 @@ import Link from 'next/link';
 type Contact = {
   id: number;
   title: string;
+  company?: string;
   completed: boolean;
   created_at: string;
 };
@@ -11,6 +12,7 @@ type Contact = {
 export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [title, setTitle] = useState('');
+  const [company, setCompany] = useState('');
   const [recommended, setRecommended] = useState<Contact | null>(null);
 
   async function load() {
@@ -24,9 +26,10 @@ export default function Home() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim()) return;
-    const res = await fetch('/api/contacts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title }) });
+    const res = await fetch('/api/contacts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, company }) });
     const t = await res.json();
     setTitle('');
+    setCompany('');
     setContacts(prev => [t, ...prev]);
   }
 
@@ -71,6 +74,7 @@ export default function Home() {
         </section>
         <form onSubmit={add}>
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New contact" type="text" />
+          <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" type="text" />
           <button type="submit">Add</button>
         </form>
         {contacts.length === 0 ? (
@@ -86,7 +90,7 @@ export default function Home() {
                     onChange={() => toggle(t)} 
                   />
                   <span style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
-                    {t.title}
+                    {t.title}{t.company ? ` · ${t.company}` : ''}
                   </span>
                 </label>
                 <button onClick={() => remove(t.id)}>Delete</button>
